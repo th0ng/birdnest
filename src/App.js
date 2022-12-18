@@ -1,13 +1,13 @@
 import React from "react";
 import { Header, Footer } from "./components";
 
-function App() {
+const App = () => {
   return (
     <>
       <Header />
       <Footer />
     </>
   );
-}
+};
 
 export default App;
