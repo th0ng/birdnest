@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "assignments.reaktor.com/birdnest/drones";
+const baseUrl = "/drones";
 
 const getdronesPosition = async () => {
   const response = await axios.get(baseUrl);

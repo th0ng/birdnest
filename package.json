@@ -17,6 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy" : "https://assignments.reaktor.com/birdnest",
   "eslintConfig": {
     "extends": [
       "react-app",
