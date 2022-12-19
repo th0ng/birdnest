@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header, Footer } from "./components";
 import droneService from "./services/drones";
 import pilotService from "./services/pilots";

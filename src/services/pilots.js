@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseUrl = "assignments.reaktor.com/birdnest/pilosts/";
+const baseUrl = "/pilosts/";
 
-const getPilotInformation = async ({ pilotId }) => {
-  const response = await axios.get(baseUrl + pilotId);
+const getPilotInformation = async ({ serialNumber }) => {
+  const response = await axios.get(baseUrl + serialNumber);
   return response.json();
 };
 
