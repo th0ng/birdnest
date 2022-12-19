@@ -5,16 +5,13 @@ import { Header, Body, Footer } from "./components";
 import droneService from "./services/drones";
 
 const App = () => {
-  const [dronesPosition, setDronesPosition] = useState([]);
+  const [drones, setDrones] = useState([]);
   const hook = () => {
     droneService.getdronesPosition().then((data) => {
-      setDronesPosition(data);
+      setDrones(data);
     }).catch((error) => console.log(error));
   };
   useEffect(hook, []);
-  // setInterval(() => {
-  //   hook();
-  // }, 5000);
 
   return (
     <>
@@ -23,7 +20,7 @@ const App = () => {
         <title>Birdnest</title>
       </Helmet>
       <Header />
-      <Body dronesPosition={dronesPosition} />
+      <Body drones={drones} />
       <Footer />
     </>
   );
