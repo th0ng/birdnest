@@ -1,20 +1,19 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useState } from "react";
-import { Header, Footer } from "./components";
+import { useState, useEffect } from "react";
+import { Header, Body, Footer } from "./components";
 import droneService from "./services/drones";
 import pilotService from "./services/pilots";
 
 const App = () => {
-  const [drones, setDrones] = useState([]);
+  const [dronesPosition, setDronesPosition] = useState([]);
   const hook = () => {
-    droneService.getdronesPosition().then((information) => {setDrones(information);
+    droneService.getdronesPosition().then((information) => {
+      setDronesPosition(information);
+      console.log(information);
     }).catch((error) => console.log(error));
   }
-  setInterval(() => {
-    hook();
-    console.log(drones);
-  }, 3000);
+  useEffect(hook, []);
 
   return (
     <>
@@ -23,6 +22,7 @@ const App = () => {
         <title>Birdnest</title>
       </Helmet>
       <Header />
+      <Body dronesPosition={dronesPosition} />
       <Footer />
     </>
   );
