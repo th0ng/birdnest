@@ -11,7 +11,9 @@ const App = () => {
     console.log(information);
     }).catch((error) => console.log(error));
   }
-  useEffect(hook, []);
+  setInterval(() => {
+    hook();
+  }, 2000);
 
   return (
     <>
