@@ -20,7 +20,9 @@ const App = () => {
         <title>Birdnest</title>
       </Helmet>
       <Header />
-      <Body drones={drones} />
+      <div className="container px-5 py-10 mx-auto">
+        { drones.length === 0 ? <div className='flex flex-col text-center font-mono font-bold text-2xl'>Loading...</div> : <Body drones={drones} />}
+      </div>
       <Footer />
     </>
   );
