@@ -4,7 +4,7 @@ const baseUrl = "/drones";
 
 const getdronesPosition = async () => {
   const response = await axios.get(baseUrl);
-  return response.xml().content;
+  return response;
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

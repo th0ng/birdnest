@@ -7,7 +7,9 @@ import pilotService from "./services/pilots";
 const App = () => {
   const [drones, setDrones] = useState([]);
   const hook = () => {
-    droneService.getdronesPosition().then((information) => setDrones(information)).catch((error) => console.log(error));
+    droneService.getdronesPosition().then((information) => {setDrones(information);
+    console.log(information);
+    }).catch((error) => console.log(error));
   }
   useEffect(hook, []);
 
