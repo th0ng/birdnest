@@ -3,17 +3,18 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { Header, Body, Footer } from "./components";
 import droneService from "./services/drones";
-import pilotService from "./services/pilots";
 
 const App = () => {
   const [dronesPosition, setDronesPosition] = useState([]);
   const hook = () => {
-    droneService.getdronesPosition().then((information) => {
-      setDronesPosition(information);
-      console.log(information);
+    droneService.getdronesPosition().then((data) => {
+      setDronesPosition(data);
     }).catch((error) => console.log(error));
-  }
+  };
   useEffect(hook, []);
+  // setInterval(() => {
+  //   hook();
+  // }, 5000);
 
   return (
     <>
