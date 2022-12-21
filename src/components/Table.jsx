@@ -33,11 +33,9 @@ const Table = ({ data }) => {
         x.children[8].value,
         x.children[7].value,
       );
-      console.log(newData);
       push(tableData, newData);
     }
   }
-  console.log(tableData);
 
   //delete data after 10 minutes
   setInterval(() => {
@@ -50,7 +48,22 @@ const Table = ({ data }) => {
   })
 
   return (
-    <div>Table</div>
+    <div>
+      <table>
+        <tr>
+          <th>Index</th>
+          <th>Serial Number</th>
+          <th>Distance</th>
+        </tr>
+        {tableData.map((item, i) =>
+        <tr>
+          <td>{i}</td>
+          <td>{item.value.serialNumber}</td>
+          <td>{item.value.distance}</td>
+        </tr>
+        )}
+      </table>
+    </div>
   )
 };
 
