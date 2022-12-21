@@ -25,7 +25,7 @@ const Table = ({ data }) => {
     const found = tableData.find(e => e.serialNumber === x.serialNumber);
     if (found) {
       console.log(found);
-      found.time = Date.now();
+      // found.time = Date.now();
       //implement the function to replace later
     } else {
       const newData = new dataConstructor(
@@ -37,7 +37,7 @@ const Table = ({ data }) => {
     }
   }
 
-  //delete data after 10 minutes
+  // delete data after 10 minutes
   setInterval(() => {
     let time = Date.now();
     for (const item of tableData) {
