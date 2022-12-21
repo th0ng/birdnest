@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import birdnestService from '../services/birdnest';
 
 //constructor for data to show in the table
@@ -20,7 +19,6 @@ const push = (array, value) => {
 
 //table function to be exported
 const Table = ({ data }) => {
-  // const [tableData, setTableData] = useState([]);
   const tableData = [];
 
   for (const x of data) {
@@ -35,13 +33,37 @@ const Table = ({ data }) => {
         x.children[8].value,
         x.children[7].value,
       );
-      console.log(newData);
       push(tableData, newData);
     }
   }
 
+  //delete data after 10 minutes
+  setInterval(() => {
+    let time = Date.now();
+    for (const item of tableData) {
+      if (item.time > time + 600000) {
+        tableData.splice(tableData.indexOf(item), 1);
+      }
+    }
+  })
+
   return (
-    <div>Table</div>
+    <div>
+      <table>
+        <tr>
+          <th>Index</th>
+          <th>Serial Number</th>
+          <th>Distance</th>
+        </tr>
+        {tableData.map((item, i) =>
+        <tr>
+          <td>{i}</td>
+          <td>{item.value.serialNumber}</td>
+          <td>{item.value.distance}</td>
+        </tr>
+        )}
+      </table>
+    </div>
   )
 };
 
