@@ -11,6 +11,9 @@ const App = () => {
       setDrones(data);
     }).catch((error) => console.log(error));
   };
+  // setInterval(() => {
+  //   hook();
+  // }, 1000);
   useEffect(hook, []);
 
   return (
