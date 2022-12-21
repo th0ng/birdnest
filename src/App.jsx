@@ -2,12 +2,12 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { Header, Body, Footer } from "./components";
-import droneService from "./services/drones";
+import birdnestService from "./services/birdnest";
 
 const App = () => {
   const [drones, setDrones] = useState([]);
   const hook = () => {
-    droneService.getdronesPosition().then((data) => {
+    birdnestService.getdronesPosition().then((data) => {
       setDrones(data);
     }).catch((error) => console.log(error));
   };
