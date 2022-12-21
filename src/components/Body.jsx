@@ -4,7 +4,6 @@ import Radar from './Radar';
 import Table from './Table';
 
 const Body = ({ drones }) => {
-  console.log(drones)
   const [device, setDevice] = useState(drones.children[0]);
   const positionsData = drones.children[1].children;
 
@@ -28,7 +27,7 @@ const Body = ({ drones }) => {
       </div>
     </div>
     <div className='flex w-full mt-5 font-mono'>
-      <Table />
+      <Table data={positionsData} />
     </div>
     </>
   );
