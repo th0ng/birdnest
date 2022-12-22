@@ -10,9 +10,11 @@ const getdronesPosition = async () => {
   return jsonData;
 };
 
-//function to get pilit information by serial number
+//function to get pilot information by serial number
 const getPilotInformation = async ({ serialNumber }) => {
-  const response = await axios.get(`/pilots/{serialNumber}`);
+  const response = await axios.get("/pilots/" + serialNumber, {
+    "Content-Type": "application/json",
+  });
   return response.json();
 };
 
