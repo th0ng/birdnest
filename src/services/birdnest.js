@@ -11,11 +11,11 @@ const getdronesPosition = async () => {
 };
 
 //function to get pilot information by serial number
-const getPilotInformation = async ({ serialNumber }) => {
-  const response = await axios.get("/pilots/" + serialNumber, {
+const getPilotInformation = async (serialNumber) => {
+  const response = await axios.get(`/pilots/${serialNumber}`, {
     "Content-Type": "application/json",
   });
-  return response.json();
+  return response.data;
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -26,25 +26,20 @@ const Table = ({ data }) => {
 
   for (const x of data) {
     console.log(x);
-    // birdnestService
-    //   .getPilotInformation(x.children[0].value)
-    //   .then((data) => {
-    //     let newData = new dataConstructor(
-    //       x.children[0].value,
-    //       x.children[8].value,
-    //       x.children[7].value,
-    //       data,
-    //     );
-    //     push(tableData, newData);
-    //   })
-      let newData = new dataConstructor(
-        x.children[0].value,
-        x.children[8].value,
-        x.children[7].value,
-        data,
-      );
-      push(tableData, newData);
+    birdnestService
+      .getPilotInformation(x.children[0].value)
+      .then((data) => {
+        let newData = new dataConstructor(
+          x.children[0].value,
+          x.children[8].value,
+          x.children[7].value,
+          data,
+        );
+        console.log(data);
+        push(tableData, newData);
+      }).catch((error) => {console.log(error)});
   }
+  console.log(tableData);
 
   // delete data after 10 minutes
   setInterval(() => {
@@ -69,7 +64,7 @@ const Table = ({ data }) => {
       <tbody>
       {tableData.map((item, i) =>
       <tr>
-        <td>{i}</td>
+        <td>{i + 1}</td>
         <td>{item.value.serialNumber}</td>
         <td>{item.value.distance}</td>
       </tr>
