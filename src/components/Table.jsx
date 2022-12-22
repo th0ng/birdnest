@@ -1,5 +1,6 @@
 import React from 'react';
 import birdnestService from '../services/birdnest';
+import { useEffect } from 'react';
 
 //constructor for data to show in the table
 function dataConstructor(serialNumber, positionX, positionY ) {
@@ -22,33 +23,28 @@ const Table = ({ data }) => {
   const tableData = [];
 
   for (const x of data) {
-    const found = tableData.find(e => e.serialNumber === x.serialNumber);
-    if (found) {
-      console.log(found);
-      // found.time = Date.now();
-      //implement the function to replace later
-    } else {
-      const newData = new dataConstructor(
-        x.children[0].value,
-        x.children[8].value,
-        x.children[7].value,
-      );
-      push(tableData, newData);
-    }
+    let newData = new dataConstructor(
+      x.children[0].value,
+      x.children[8].value,
+      x.children[7].value,
+    );
+    push(tableData, newData);
   }
 
   // delete data after 10 minutes
   setInterval(() => {
     let time = Date.now();
     for (const item of tableData) {
-      if (item.time > time + 600000) {
+      if (time > item.time + 6000) {
         tableData.splice(tableData.indexOf(item), 1);
       }
-    }
-  })
+    };
+  }, 6000);
+
 
   return (
     <div>
+      <p>Table</p>
       <table>
         <tr>
           <th>Index</th>
