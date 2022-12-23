@@ -11,46 +11,37 @@ function dataConstructor(serialNumber, positionX, positionY, pilotInformation ) 
   this.pilotInformation = pilotInformation;
 };
 
-//function to push the data into array, with timestamp
-const push = (array, value) => {
-  array.push({
-     value: value,
-     time: Date.now()
-  });
-};
-
 //table function to be exported
 const Table = ({ data }) => {
 
-  const tableData = [];
-
-  for (const x of data) {
-    console.log(x);
+  const dataArray = [];
+  console.log(typeof dataArray);
+  for (const drone of data) {
     birdnestService
-      .getPilotInformation(x.children[0].value)
-      .then((data) => {
-        let newData = new dataConstructor(
-          x.children[0].value,
-          x.children[8].value,
-          x.children[7].value,
-          data,
+      .getPilotInformation(drone.children[0].value)
+      .then((information) => {
+        const newData = new dataConstructor(
+          drone.children[0].value,
+          drone.children[8].value,
+          drone.children[7].value,
+          information,
         );
-        console.log(data);
-        push(tableData, newData);
-      }).catch((error) => {console.log(error)});
+        dataArray.unshift([{
+          data: newData,
+          time: Date.now()
+        }]);
+      }).catch((error) => {console.error(error)});
   }
-  console.log(tableData);
 
   // delete data after 10 minutes
-  setInterval(() => {
-    let time = Date.now();
-    for (const item of tableData) {
-      if (time > item.time + 6000) {
-        tableData.splice(tableData.indexOf(item), 1);
-      }
-    };
-  }, 6000);
-
+  // setInterval(() => {
+  //   let time = Date.now();
+  //   for (const item of tableData) {
+  //     if (time > item.time + 6000) {
+  //       tableData.splice(tableData.indexOf(item), 1);
+  //     }
+  //   };
+  // }, 6000);
 
   return (
     <table>
@@ -62,11 +53,11 @@ const Table = ({ data }) => {
       </tr>
       </thead>
       <tbody>
-      {tableData.map((item, i) =>
+      {dataArray.map((item, index) =>
       <tr>
-        <td>{i + 1}</td>
-        <td>{item.value.serialNumber}</td>
-        <td>{item.value.distance}</td>
+        <td>{index + 1}</td>
+        <td>{item.data.serialNumber}</td>
+        <td>{item.data.distance}</td>
       </tr>
       )}
       </tbody>
