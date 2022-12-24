@@ -1,6 +1,6 @@
 import React from 'react';
 import birdnestService from '../services/birdnest';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 //constructor for data to show in the table
 function dataConstructor(serialNumber, positionX, positionY, pilotInformation ) {
@@ -13,9 +13,7 @@ function dataConstructor(serialNumber, positionX, positionY, pilotInformation ) 
 
 //table function to be exported
 const Table = ({ data }) => {
-
-  const dataArray = [];
-  console.log(typeof dataArray);
+  const [dataArray, setDataArray] = useState([]);
   for (const drone of data) {
     birdnestService
       .getPilotInformation(drone.children[0].value)
@@ -26,36 +24,25 @@ const Table = ({ data }) => {
           drone.children[7].value,
           information,
         );
-        dataArray.unshift([{
+        const newArray = dataArray.unshift({
           data: newData,
           time: Date.now()
-        }]);
+        });
+        setDataArray(newArray);
       }).catch((error) => {console.error(error)});
   }
-
-  // delete data after 10 minutes
-  // setInterval(() => {
-  //   let time = Date.now();
-  //   for (const item of tableData) {
-  //     if (time > item.time + 6000) {
-  //       tableData.splice(tableData.indexOf(item), 1);
-  //     }
-  //   };
-  // }, 6000);
 
   return (
     <table>
       <thead>
       <tr>
-        <th>Index</th>
         <th>Serial Number</th>
         <th>Distance</th>
       </tr>
       </thead>
       <tbody>
-      {dataArray.map((item, index) =>
+      {dataArray.map((item) =>
       <tr>
-        <td>{index + 1}</td>
         <td>{item.data.serialNumber}</td>
         <td>{item.data.distance}</td>
       </tr>
