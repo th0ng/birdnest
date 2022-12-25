@@ -17,18 +17,14 @@ const Table = ({ data }) => {
   for (const drone of data) {
     birdnestService
       .getPilotInformation(drone.children[0].value)
-      .then((information) => {
+      .then((pilotInformation) => {
         const newData = new dataConstructor(
           drone.children[0].value,
           drone.children[8].value,
           drone.children[7].value,
-          information,
+          pilotInformation,
         );
-        const newArray = dataArray.unshift({
-          data: newData,
-          time: Date.now()
-        });
-        setDataArray(newArray);
+        setDataArray([{data: newData, time: Date.now()}].concat(dataArray));
       }).catch((error) => {console.error(error)});
   }
 
