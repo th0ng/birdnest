@@ -17,7 +17,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
-  "proxy": "https://assignments.reaktor.com/birdnest",
   "eslintConfig": {
     "extends": [
       "react-app",
