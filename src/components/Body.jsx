@@ -1,9 +1,56 @@
 import React from 'react';
-import Table from './Table';
+import { useState } from 'react';
+import birdnestService from '../services/birdnest';
+
+function droneConstructor(serialNumber, positionX, positionY, pilotInformation ) {
+  this.serialNumber = serialNumber;
+  this.positionX = positionX;
+  this.positionY = positionY;
+  this.distance = Math.hypot(positionX, positionY);
+  this.pilotInformation = pilotInformation;
+};
+
 
 const Body = ({ drones }) => {
   const device = drones.children[0];
   const positionsData = drones.children[1].children;
+
+  const [violatingDrones, setViolatingDrones] = useState([]);
+
+  //Looping through the data
+  for (const pos of positionsData) {
+    //Check if the position is in the no-fly zone
+    const distance = Math.hypot(Math.abs(pos.children[8].value - 250000), Math.abs(pos.children[7].value - 250000))
+    if (distance < 100000 ) {
+      const found = violatingDrones.find(drone => drone.serialNumber === pos.children[0]);
+      if (found) {
+        const index = violatingDrones.indexOf(found);
+        const updatedDrone = {
+          data: new droneConstructor(found.serialNumber, pos.children[8].value, pos.chldren[7].value, found.pilotInformation),
+          time: Date.now()
+        };
+        setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
+      } else {
+        birdnestService
+          .getPilotInformation(pos.children[0].value)
+          .then((pilotInformation) => {
+            const newViolatingDrone = {
+              data: new droneConstructor(
+                pos.children[0].value,
+                pos.children[8].value,
+                pos.children[7].value,
+                pilotInformation,
+              ),
+              time: Date.now()
+            };
+            setViolatingDrones([newViolatingDrone].concat(violatingDrones));
+          });
+      }
+    }
+  };
+
+  console.log(violatingDrones);
+
 
   return (
     <>
@@ -25,7 +72,6 @@ const Body = ({ drones }) => {
       </div>
     </div>
     <div className='flex w-full mt-5 font-mono'>
-      <Table data={positionsData} />
     </div>
     </>
   );
