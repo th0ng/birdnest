@@ -14,6 +14,7 @@ function dataConstructor(serialNumber, positionX, positionY, pilotInformation ) 
 //table function to be exported
 const Table = ({ data }) => {
   const [dataArray, setDataArray] = useState([]);
+  console.log(data);
   for (const drone of data) {
     birdnestService
       .getPilotInformation(drone.children[0].value)

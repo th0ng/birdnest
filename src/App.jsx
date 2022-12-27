@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header, Body, Footer } from "./components";
 import birdnestService from "./services/birdnest";
 
@@ -8,7 +8,7 @@ const App = () => {
   const hook = () => {
     birdnestService.getdronesPosition().then((data) => {
       setDrones(data);
-    }).catch((error) => console.log(error));
+    }).catch((error) => console.error(error));
   };
   setInterval(() => {
     hook();

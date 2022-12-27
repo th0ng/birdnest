@@ -1,10 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
-import Radar from './Radar';
 import Table from './Table';
 
 const Body = ({ drones }) => {
-  const [device, setDevice] = useState(drones.children[0]);
+  const device = drones.children[0];
   const positionsData = drones.children[1].children;
 
   return (
@@ -23,7 +21,7 @@ const Body = ({ drones }) => {
         </p>
       </div>
       <div className='flex w-1/2'>
-        <Radar data={positionsData}/>
+
       </div>
     </div>
     <div className='flex w-full mt-5 font-mono'>
