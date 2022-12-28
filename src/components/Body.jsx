@@ -86,8 +86,12 @@ const Body = ({ drones }) => {
         <table>
           <thead>
           <tr>
+            <th>Time</th>
             <th>Serial Number</th>
-            <th></th>
+            <th>Closet distance</th>
+            <th>Pilot's name</th>
+            <th>Pilot's address</th>
+            <th>Pilot's phonenumber</th>
           </tr>
           </thead>
 

@@ -8,11 +8,11 @@ const App = () => {
   const hook = () => {
     birdnestService.getdronesPosition().then((data) => {
       setDrones(data);
-    }).catch((error) => {throw new Error(error)});
+    }).catch((err) => console.error(err));
   };
   setInterval(() => {
     hook();
-  }, 2000);
+  }, 10000);
   return (
     <>
       <Header />
