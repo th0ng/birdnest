@@ -54,12 +54,13 @@ const Body = ({ drones }) => {
     }
   };
 
-  console.log(violatingDrones);
 
+  //running every 1 minute to check for outtimed drones information
   setInterval(() => {
     var time = Date.now();
-    var updatedDronesArray = violatingDrones.filter(d => d)
-  }, 1000);
+    var updatedDronesArray = violatingDrones.filter(d => (d.time + (60 * 10000)) < time);
+    setViolatingDrones(updatedDronesArray);
+  }, 60000);
 
 
   return (
@@ -82,6 +83,15 @@ const Body = ({ drones }) => {
         </div>
       </div>
       <div className='flex w-full mt-5 font-mono'>
+        <table>
+          <thead>
+          <tr>
+            <th>Serial Number</th>
+            <th></th>
+          </tr>
+          </thead>
+
+        </table>
       </div>
     </>
   );

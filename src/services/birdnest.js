@@ -1,20 +1,25 @@
-import axios from "axios";
 import XMLParser from "react-xml-parser";
 
-//request to the database and get back xml data
 const getdronesPosition = async () => {
-  const response = await axios.get("/drones", {
-    "Content-Type": "application/xml; charset=utf-8",
-  });
-  const jsonData = new XMLParser().parseFromString(response.data);
+  const reponse = await fetch(
+    "https://assignments.reaktor.com/birdnest/drones",
+    {
+      method: "GET",
+      "Content-Type": "application/xml; charset=utf-8",
+    }
+  );
+  const jsonData = new XMLParser().parseFromString(reponse.data);
   return jsonData;
 };
 
-//function to get pilot information by serial number
 const getPilotInformation = async (serialNumber) => {
-  const response = await axios.get(`/pilots/${serialNumber}`, {
-    "Content-Type": "application/json",
-  });
+  const response = await fetch(
+    `https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`,
+    {
+      method: "GET",
+      "Content-Type": "application/json",
+    }
+  );
   return response.data;
 };
 
