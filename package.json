@@ -23,6 +23,7 @@
       "react-app/jest"
     ]
   },
+  "proxy": "https://assignments.reaktor.com/birdnest/",
   "browserslist": {
     "production": [
       ">0.2%",
