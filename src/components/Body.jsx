@@ -82,6 +82,16 @@ const Body = ({ drones }) => {
         </div>
       </div>
       <div className='flex w-full mt-5 font-mono'>
+        <table>
+          <thead>
+            <th>Serial number</th>
+            <th>Closest distance</th>
+            <th>Pilot</th>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </div>
     </>
   );
