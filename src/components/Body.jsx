@@ -25,9 +25,10 @@ const Body = ({ drones }) => {
     //Check if the position is in the no-fly zone
     const distance = Math.hypot(Math.abs(drone.children[8].value - 250000), Math.abs(drone.children[7].value - 250000))
     if (distance < 100000 ) {
-      //Check if there's already that drone in the array, if so update the timestamp, else update the array
-      const found = violatingDrones.find(e => e.serialNumber === drone.children[0]);
+      //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
+      const found = violatingDrones.find(e => e.serialNumber === drone.children[0].value);
       if (found) {
+        console.log(found);
         const index = violatingDrones.indexOf(found);
 
         const updatedDrone = {
@@ -61,7 +62,7 @@ const Body = ({ drones }) => {
     var updatedDronesArray = violatingDrones.filter(d => d)
   }, 1000);
 
-
+  console.log(violatingDrones);
   return (
     <>
       <div className='flex w-full mb-5 font-mono'>
@@ -89,7 +90,11 @@ const Body = ({ drones }) => {
             <th>Pilot</th>
           </thead>
           <tbody>
-
+            {violatingDrones.map((drone) => {
+              <tr>
+                {/* <td>{drone.}</td> */}
+              </tr>
+            })}
           </tbody>
         </table>
       </div>
