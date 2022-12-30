@@ -64,7 +64,7 @@ const Body = ({ drones }) => {
     var updatedDronesArray = violatingDrones.filter(d =>
       d.time + 600000 > time);
     setViolatingDrones(updatedDronesArray);
-  }, 1000);
+  }, 60000);
 
   console.log(violatingDrones);
   return (
@@ -89,19 +89,18 @@ const Body = ({ drones }) => {
       <div className='flex w-full mt-5 font-mono'>
         <table>
           <thead>
-            <th>Time</th>
             <th>Serial number</th>
             <th>Closest distance</th>
             <th>Pilot</th>
           </thead>
           <tbody>
-            {violatingDrones.map((drone) => {
+            {violatingDrones.map((drone) =>
               <tr>
-                <td>{drone.time.toLocaleDateString}</td>
                 <td>{drone.data.serialNumber}</td>
-                <td>{drone.data.distance}</td>
+                <td>{drone.data.closestDistance}</td>
+                <td>Pilot's informatin here</td>
               </tr>
-            })}
+            )}
           </tbody>
         </table>
       </div>
