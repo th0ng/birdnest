@@ -3,11 +3,11 @@ import { useState } from 'react';
 import birdnestService from '../services/birdnest';
 
 //construction for drone data
-function droneConstructor(serialNumber, positionX, positionY, pilotInformation ) {
+function droneConstructor(serialNumber, positionX, positionY, closestDistance, pilotInformation ) {
   this.serialNumber = serialNumber;
   this.positionX = positionX;
   this.positionY = positionY;
-  this.distance = Math.hypot(positionX, positionY);
+  this.closestDistance = closestDistance;
   this.pilotInformation = pilotInformation;
 };
 
@@ -28,11 +28,12 @@ const Body = ({ drones }) => {
       //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
       const found = violatingDrones.find(e => e.serialNumber === drone.children[0].value);
       if (found) {
-        console.log(found);
         const index = violatingDrones.indexOf(found);
 
+        const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
+
         const updatedDrone = {
-          data: new droneConstructor(found.serialNumber, drone.children[8].value, drone.chldren[7].value, found.pilotInformation),
+          data: new droneConstructor(found.serialNumber, drone.children[8].value, drone.chldren[7].value, updatedClosestDistance, found.pilotInformation),
           time: Date.now()
         };
         setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
@@ -45,6 +46,7 @@ const Body = ({ drones }) => {
                 drone.children[0].value,
                 drone.children[8].value,
                 drone.children[7].value,
+                distance,
                 pilotInformation,
               ),
               time: Date.now()
@@ -59,7 +61,9 @@ const Body = ({ drones }) => {
 
   setInterval(() => {
     var time = Date.now();
-    var updatedDronesArray = violatingDrones.filter(d => d)
+    var updatedDronesArray = violatingDrones.filter(d =>
+      d.time + 600000 > time);
+    setViolatingDrones(updatedDronesArray);
   }, 1000);
 
   console.log(violatingDrones);
@@ -85,6 +89,7 @@ const Body = ({ drones }) => {
       <div className='flex w-full mt-5 font-mono'>
         <table>
           <thead>
+            <th>Time</th>
             <th>Serial number</th>
             <th>Closest distance</th>
             <th>Pilot</th>
@@ -92,7 +97,9 @@ const Body = ({ drones }) => {
           <tbody>
             {violatingDrones.map((drone) => {
               <tr>
-                {/* <td>{drone.}</td> */}
+                <td>{drone.time.toLocaleDateString}</td>
+                <td>{drone.data.serialNumber}</td>
+                <td>{drone.data.distance}</td>
               </tr>
             })}
           </tbody>
