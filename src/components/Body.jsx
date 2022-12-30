@@ -95,13 +95,14 @@ const Body = ({ drones }) => {
             <th>Pilot</th>
           </thead>
           <tbody>
-            {violatingDrones.map((drone) => {
+            {violatingDrones.map((drone) =>
               <tr>
                 <td>{drone.time.toLocaleDateString}</td>
                 <td>{drone.data.serialNumber}</td>
                 <td>{drone.data.distance}</td>
+                <td>Pilot's informatin here</td>
               </tr>
-            })}
+            )}
           </tbody>
         </table>
       </div>
