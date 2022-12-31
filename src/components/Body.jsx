@@ -26,7 +26,7 @@ const Body = ({ drones }) => {
     const distance = Math.hypot(Math.abs(drone.children[8].value - 250000), Math.abs(drone.children[7].value - 250000))
     if (distance < 100000 ) {
       //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
-      const found = violatingDrones.find(e => e.serialNumber === drone.children[0].value);
+      const found = violatingDrones.find(e => e.data.serialNumber === drone.children[0].value);
       if (found) {
         const index = violatingDrones.indexOf(found);
 
