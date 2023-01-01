@@ -18,6 +18,7 @@ const Body = ({ drones }) => {
   //drones data
   const dronesData = drones.children[1].children;
 
+  //array to store the data
   const [violatingDrones, setViolatingDrones] = useState([]);
 
   //Looping through the data
@@ -38,6 +39,7 @@ const Body = ({ drones }) => {
         };
         setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
       } else {
+        //If there's not the drone in the array, get the pilot information and make a new data by constructor, after that add new data to the array and update the array
         birdnestService
           .getPilotInformation(drone.children[0].value)
           .then((pilotInformation) => {
@@ -57,8 +59,7 @@ const Body = ({ drones }) => {
     }
   };
 
-  console.log(violatingDrones);
-
+  //check for outtimed data every 1 minute.
   setInterval(() => {
     var time = Date.now();
     var updatedDronesArray = violatingDrones.filter(d =>
