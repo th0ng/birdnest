@@ -37,7 +37,9 @@ const Body = ({ drones }) => {
           data: new droneConstructor(found.serialNumber, drone.children[8].value, drone.chldren[7].value, updatedClosestDistance, found.pilotInformation),
           time: Date.now()
         };
-        setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
+        const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
+        setViolatingDrones(updatedDronesArray)
+        // setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
       } else {
         //If there's not the drone in the array, get the pilot information and make a new data by constructor, after that add new data to the array and update the array
         birdnestService
