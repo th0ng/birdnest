@@ -29,12 +29,15 @@ const Body = ({ drones }) => {
       //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
       const found = violatingDrones.find(obj => obj.data.serialNumber === drone.children[0].value);
       if (found) {
-        const index = violatingDrones.indexOf(found);
-
         const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
 
         const updatedDrone = {
-          data: new droneConstructor(found.serialNumber, drone.children[8].value, drone.chldren[7].value, updatedClosestDistance, found.pilotInformation),
+          data: new droneConstructor(
+            drone.children[0].value,
+            drone.children[8].value,
+            drone.chldren[7].value,
+            updatedClosestDistance,
+            found.data.pilotInformation),
           time: Date.now()
         };
         const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
