@@ -8,7 +8,7 @@ const App = () => {
   const hook = () => {
     birdnestService.getdronesPosition().then((data) => {
       setDrones(data);
-    }).catch((error) => {throw new Error(error)});
+    }).catch((error) => console.log(error));
   };
   setInterval(() => {
     hook();

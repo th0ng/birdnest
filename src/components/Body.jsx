@@ -11,7 +11,7 @@ function droneConstructor(serialNumber, positionX, positionY, closestDistance, p
   this.pilotInformation = pilotInformation;
 };
 
-
+//Body
 const Body = ({ drones }) => {
   //device data
   const device = drones.children[0];
@@ -30,14 +30,16 @@ const Body = ({ drones }) => {
       const found = violatingDrones.find(obj => obj.data.serialNumber === drone.children[0].value);
       if (found) {
         const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
-
+        //Define the updated piece of data
+        const updatedDroneData = new droneConstructor(
+          found.data.serialNumber,
+          drone.children[8].value,
+          drone.children[7].value,
+          updatedClosestDistance,
+          found.data.pilotInformation,
+        )
         const updatedDrone = {
-          data: new droneConstructor(
-            drone.children[0].value,
-            drone.children[8].value,
-            drone.chldren[7].value,
-            updatedClosestDistance,
-            found.data.pilotInformation),
+          data: updatedDroneData,
           time: Date.now()
         };
         const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
@@ -103,7 +105,7 @@ const Body = ({ drones }) => {
               <tr>
                 <td>{drone.data.serialNumber}</td>
                 <td>{drone.data.closestDistance}</td>
-                <td>Pilot's informatin here</td>
+                <td>{drone.data.pilotInformation}</td>
               </tr>
             )}
           </tbody>
