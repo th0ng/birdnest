@@ -109,7 +109,11 @@ const Body = ({ drones }) => {
               <tr>
                 <td>{drone.data.serialNumber}</td>
                 <td>{drone.data.closestDistance}</td>
-                <td>Pilot information</td>
+                <td>
+                  <p>{drone.data.pilotInformation.pilotId}</p>
+                  <p>{drone.data.pilotInformation.firstName} {drone.data.pilotInformation.lastName}</p>
+                  <p>{drone.data.pilotInformation.email}</p>
+                </td>
               </tr>
             )}
           </tbody>
