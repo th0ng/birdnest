@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="body-font absolute inset-x-0 bottom-0">
+    <footer className="body-font inset-x-0 bottom-0">
       <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
         <p className="flex title-font items-center md:justify-start justify-center text-gray-500">
           Birdnest project

@@ -29,7 +29,7 @@ const Body = ({ drones }) => {
         //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
         const found = violatingDrones.find(obj => obj.data.serialNumber === drone.children[0].value);
         if (found) {
-          const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
+          const updatedClosestDistance = distance < found.data.distance ? distance : found.data.closestDistance;
           //Define the updated piece of data
           const updatedDroneData = new droneConstructor(
             found.data.serialNumber,
@@ -37,7 +37,7 @@ const Body = ({ drones }) => {
             drone.children[7].value,
             updatedClosestDistance,
             found.data.pilotInformation,
-          )
+          );
           const updatedDrone = {
             data: updatedDroneData,
             time: Date.now()
@@ -64,9 +64,9 @@ const Body = ({ drones }) => {
         }
       }
     };
-  },[drones])
+  },[drones]);
 
-  //check for outtimed data every 1 minute.
+  //check for outtimed data every 1 minute using useEffect and Interval.
   useEffect(() => {
     const interval = setInterval(() => {
       var time = Date.now();
@@ -81,7 +81,7 @@ const Body = ({ drones }) => {
     <>
       <div className='flex w-full mb-5 font-mono'>
         <div className='flex flex-col w-1/2'>
-          <h2 className='font-bold text-xl text-indigo-500'>Device:</h2>
+          <h2 className='font-bold text-xl text-indigo-500 mb-5'>DEVICE INFORMATION</h2>
           <p className='font-medium text-base'>
           Device ID: {device.attributes.deviceId}
           <br />
@@ -92,11 +92,9 @@ const Body = ({ drones }) => {
           }
           </p>
         </div>
-        <div className='flex w-1/2'>
-
-        </div>
       </div>
-      <div className='flex w-full mt-5 font-mono'>
+      <div className='w-full mt-5 font-mono'>
+        <h2 className='font-bold text-xl text-indigo-500 mb-5'>TABLE OF VIOLATING DRONES AND ITS PILOTS</h2>
         <table>
           <thead>
             <th>Serial number</th>
@@ -110,7 +108,7 @@ const Body = ({ drones }) => {
                 <td>{drone.data.closestDistance}</td>
                 <td>
                   <p>Pilot's ID: {drone.data.pilotInformation.pilotId}</p>
-                  <p>Pilot's name{drone.data.pilotInformation.firstName} {drone.data.pilotInformation.lastName}</p>
+                  <p>Pilot's name: {drone.data.pilotInformation.firstName} {drone.data.pilotInformation.lastName}</p>
                   <p>Pilot's email: {drone.data.pilotInformation.email}</p>
                   <p>Pilot's phonenumber: {drone.data.pilotInformation.phoneNumber}</p>
                 </td>
