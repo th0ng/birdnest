@@ -70,13 +70,12 @@ const Body = ({ drones }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       var time = Date.now();
-    var updatedDronesArray = violatingDrones.filter(d =>
+      var updatedDronesArray = violatingDrones.filter(d =>
       d.time + 600000 > time);
-    setViolatingDrones(updatedDronesArray);
+      setViolatingDrones(updatedDronesArray);
     }, 60000); // this will run the effect every 1 minute
     return () => clearInterval(interval); // this will clear the interval when the component unmounts
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <>
