@@ -22,48 +22,48 @@ const Body = ({ drones }) => {
   const [violatingDrones, setViolatingDrones] = useState([]);
   useEffect(() => {
     //Looping through the data
-  for (const drone of dronesData) {
-    //Check if the position is in the no-fly zone
-    const distance = Math.hypot(Math.abs(drone.children[8].value - 250000), Math.abs(drone.children[7].value - 250000))
-    if (distance < 100000 ) {
-      //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
-      const found = violatingDrones.find(obj => obj.data.serialNumber === drone.children[0].value);
-      if (found) {
-        const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
-        //Define the updated piece of data
-        const updatedDroneData = new droneConstructor(
-          found.data.serialNumber,
-          drone.children[8].value,
-          drone.children[7].value,
-          updatedClosestDistance,
-          found.data.pilotInformation,
-        )
-        const updatedDrone = {
-          data: updatedDroneData,
-          time: Date.now()
-        };
-        const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
-        setViolatingDrones(updatedDronesArray);
-      } else {
-        //If there's not the drone in the array, get the pilot information and make a new data by constructor, after that add new data to the array and update the array
-        birdnestService
-          .getPilotInformation(drone.children[0].value)
-          .then((pilotInformation) => {
-            const newViolatingDrone = {
-              data: new droneConstructor(
-                drone.children[0].value,
-                drone.children[8].value,
-                drone.children[7].value,
-                distance,
-                pilotInformation,
-              ),
-              time: Date.now()
-            };
-            setViolatingDrones([newViolatingDrone, ...violatingDrones]);
-          });
+    for (const drone of dronesData) {
+      //Check if the position is in the no-fly zone
+      const distance = Math.hypot(Math.abs(drone.children[8].value - 250000), Math.abs(drone.children[7].value - 250000));
+      if (distance < 100000 ) {
+        //Check if there's already that drone in the array, if so update the timestamp, else update the array with the new drone
+        const found = violatingDrones.find(obj => obj.data.serialNumber === drone.children[0].value);
+        if (found) {
+          const updatedClosestDistance = distance < found.data.distance ? distance : found.data.distance;
+          //Define the updated piece of data
+          const updatedDroneData = new droneConstructor(
+            found.data.serialNumber,
+            drone.children[8].value,
+            drone.children[7].value,
+            updatedClosestDistance,
+            found.data.pilotInformation,
+          )
+          const updatedDrone = {
+            data: updatedDroneData,
+            time: Date.now()
+          };
+          const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
+          setViolatingDrones(updatedDronesArray);
+        } else {
+          //If there's not the drone in the array, get the pilot information and make a new data by constructor, after that add new data to the array and update the array
+          birdnestService
+            .getPilotInformation(drone.children[0].value)
+            .then((pilotInformation) => {
+              const newViolatingDrone = {
+                data: new droneConstructor(
+                  drone.children[0].value,
+                  drone.children[8].value,
+                  drone.children[7].value,
+                  distance,
+                  pilotInformation,
+                ),
+                time: Date.now()
+              };
+              setViolatingDrones([newViolatingDrone, ...violatingDrones]);
+            });
+        }
       }
-    }
-  };
+    };
   },[drones, dronesData, violatingDrones])
 
   //check for outtimed data every 1 minute.
@@ -109,7 +109,7 @@ const Body = ({ drones }) => {
               <tr>
                 <td>{drone.data.serialNumber}</td>
                 <td>{drone.data.closestDistance}</td>
-                <td>{drone.data.pilotInformation}</td>
+                <td>Pilot information</td>
               </tr>
             )}
           </tbody>
