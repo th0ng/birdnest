@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import birdnestService from '../services/birdnest';
 
 //construction for drone data
@@ -13,15 +13,15 @@ function droneConstructor(serialNumber, positionX, positionY, closestDistance, p
 
 //Body
 const Body = ({ drones }) => {
-  //device data
+  //device data, stay static
   const device = drones.children[0];
-  //drones data
+  //drones data, updated every 2 seconds
   const dronesData = drones.children[1].children;
 
   //array to store the data
   const [violatingDrones, setViolatingDrones] = useState([]);
-
-  //Looping through the data
+  useEffect(() => {
+    //Looping through the data
   for (const drone of dronesData) {
     //Check if the position is in the no-fly zone
     const distance = Math.hypot(Math.abs(drone.children[8].value - 250000), Math.abs(drone.children[7].value - 250000))
@@ -43,8 +43,7 @@ const Body = ({ drones }) => {
           time: Date.now()
         };
         const updatedDronesArray = violatingDrones.map(drone => drone.data.serialNumber === updatedDrone.data.serialNumber ? updatedDrone : drone );
-        setViolatingDrones(updatedDronesArray)
-        // setViolatingDrones(...violatingDrones.slice(0, index), updatedDrone, ...violatingDrones.slice(index + 1));
+        setViolatingDrones(updatedDronesArray);
       } else {
         //If there's not the drone in the array, get the pilot information and make a new data by constructor, after that add new data to the array and update the array
         birdnestService
@@ -60,19 +59,24 @@ const Body = ({ drones }) => {
               ),
               time: Date.now()
             };
-            setViolatingDrones([newViolatingDrone].concat(violatingDrones));
+            setViolatingDrones([newViolatingDrone, ...violatingDrones]);
           });
       }
     }
   };
+  },[drones, dronesData, violatingDrones])
 
   //check for outtimed data every 1 minute.
-  setInterval(() => {
-    var time = Date.now();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      var time = Date.now();
     var updatedDronesArray = violatingDrones.filter(d =>
       d.time + 600000 > time);
     setViolatingDrones(updatedDronesArray);
-  }, 60000);
+    }, 60000); // this will run the effect every 1 minute
+    return () => clearInterval(interval); // this will clear the interval when the component unmounts
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
