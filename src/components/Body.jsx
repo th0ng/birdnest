@@ -64,7 +64,7 @@ const Body = ({ drones }) => {
         }
       }
     };
-  },[drones, dronesData, violatingDrones])
+  },[drones])
 
   //check for outtimed data every 1 minute.
   useEffect(() => {
@@ -109,9 +109,10 @@ const Body = ({ drones }) => {
                 <td>{drone.data.serialNumber}</td>
                 <td>{drone.data.closestDistance}</td>
                 <td>
-                  <p>{drone.data.pilotInformation.pilotId}</p>
-                  <p>{drone.data.pilotInformation.firstName} {drone.data.pilotInformation.lastName}</p>
-                  <p>{drone.data.pilotInformation.email}</p>
+                  <p>Pilot's ID: {drone.data.pilotInformation.pilotId}</p>
+                  <p>Pilot's name{drone.data.pilotInformation.firstName} {drone.data.pilotInformation.lastName}</p>
+                  <p>Pilot's email: {drone.data.pilotInformation.email}</p>
+                  <p>Pilot's phonenumber: {drone.data.pilotInformation.phoneNumber}</p>
                 </td>
               </tr>
             )}
