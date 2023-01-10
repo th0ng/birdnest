@@ -1,18 +1,23 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Header, Body, Footer } from "./components";
 import birdnestService from "./services/birdnest";
 
 const App = () => {
   const [drones, setDrones] = useState([]);
-  const hook = () => {
-    birdnestService.getdronesPosition().then((data) => {
-      setDrones(data);
-    }).catch((error) => console.log(error));
-  };
-  setInterval(() => {
-    hook();
-  }, 2000);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const data = await birdnestService.getdronesPosition();
+        setDrones(data);
+      } catch (error) {
+        throw new Error(error);
+      }
+    }, 2000); // this will run the effect every 2 seconds
+
+    return () => clearInterval(interval); // this will clear the interval when the component unmounts
+  }, []);
+
   return (
     <>
       <Header />
@@ -23,5 +28,6 @@ const App = () => {
     </>
   );
 };
+
 
 export default App;
